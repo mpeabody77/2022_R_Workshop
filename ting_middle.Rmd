@@ -1,0 +1,210 @@
+---
+title: "2022 Summer R Workshop (Middle Part)"
+output: html_document
+date: '2022-06-16'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data and Packages
+### Installing and loading packages
+   * There are tidyverse, data.table, and base solutions to nearly every problem.
+       + About the tidyverse (https://www.tidyverse.org/)
+       + About the data.table (https://rdatatable.gitlab.io/data.table/)
+       + About base R (https://www.statmethods.net/about/learningcurve.html)
+   * In this workshop, we are going to focus on tidyverse. 
+
+```{r packagetidyverse, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install packages
+install.packages("tidyverse") 
+```
+
+```{r package tidyverse, eval= TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+# Loading packages 
+library("tidyverse")
+```
+
+## Data Manipulation  
+### Look at Data
+```{r preview}
+# first 6 rows with column names
+head(iris)
+```
+
+```{r dim}
+# how many rows of the data frame
+nrow(iris)
+# how many columns of the data frame
+ncol(iris)
+# what's the dimension of the data frame: row * column
+dim(iris)
+```
+### Select Data by Column
+```{r select columns}
+# select only the width columns
+width.only <- select(iris, Sepal.Width, Petal.Width)
+head(width.only)
+```
+### Select Data by Row
+```{r select rows}
+# select sepal length greater than 6. 
+long.length <- filter(iris, Sepal.Length > 6)
+head(long.length)
+
+# select the first 10 rows 
+first.ten <- slice(iris, 1:10)
+first.ten
+```
+
+### Select Data both by Column and Row
+```{r select both}
+# select sepal length greater than 6. and only the width columns
+bothsel <- iris %>%
+             filter(Sepal.Length > 6) %>%
+             select(Sepal.Width, Petal.Width)    
+head(bothsel)
+dim(bothsel)
+```
+### Create New Columns based on Old Columns
+```{r create column}
+# add a new column in iris called as Sepal.Length_mm
+addediris <- iris %>%
+              mutate(Sepal.Length_mm = Sepal.Length * 100)
+head(addediris)
+dim(addediris)
+```
+### Rename Variables
+```{r rename}
+# rename(data frame, new_name = old_name, new_name = old_name)
+iris <- rename(iris, pet.len = Petal.Length, pet.wid=Petal.Width) 
+head(iris)
+```
+
+### Aggregate and Sort
+```{r aggregate column}
+# create a summary table by species
+sumtab <- iris %>%
+            group_by(Species) %>%
+            summarize(mean_Sepal.Length = mean(Sepal.Length), total = n())
+sumtab
+```
+
+```{r sort column}
+# sort summary table
+sortedsumtab <- sumtab %>%
+                  arrange(desc(mean_Sepal.Length))
+sortedsumtab
+```
+### Combine and Merge
+* Combine Columns
+```{r cbind}
+combinedcol <- cbind(width.only, select(iris, Species))
+head(combinedcol)
+dim(combinedcol)
+```
+* Combine Rows
+```{r rbind}
+iris.first.half <- slice(iris, 1:75)
+iris.second.half <- slice(iris, 76:150)
+back.together <- rbind(iris.first.half, iris.second.half)
+
+dim(iris.first.half)
+dim(iris.second.half)
+dim(back.together)
+```
+* Merge or Join by Key Variable
+```{r join}
+# create a new data frame with the key variable called as "id.code"
+id.code <- seq(1:nrow(iris))
+some.rand <- rnorm(1:nrow(iris), mean = 0, sd = 1)
+new.df <- data.frame(id.code, some.rand)
+head(new.df)
+
+# create a key variable in iris
+iris <- iris %>% 
+          mutate(id.code = seq(1:nrow(iris))) 
+
+iris.join <- full_join(iris, new.df, by="id.code")
+head(iris.join)
+
+## right_join
+## left_join
+## inner_join
+## anti_join
+```
+
+## Analysis  
+### Basic Statistics
+```{r basic statistics}
+mean(iris$Sepal.Length, na.rm = TRUE)
+sd(iris$Sepal.Length, na.rm = TRUE)
+cor(iris$Sepal.Length, iris$Sepal.Width)
+```
+### Statistical Tests
+* t-test
+```{r t-test}
+iristtest <- filter(iris, Species!="setosa")
+t.test(iristtest$Sepal.Length~iristtest$Species)
+```
+* anova
+```{r anova}
+one.way <- aov(Sepal.Length ~ Species, data = iris)
+summary(one.way)
+```
+* regression
+```{r regression}
+my.model <- lm(Sepal.Length ~ pet.len, data=iris)
+summary(my.model)
+```
+
+### Plots
+```{r plot, message=FALSE}
+my.plot <- ggplot(iris, aes(Sepal.Length, pet.len))+
+   geom_point(aes(colour=Species))+
+   geom_smooth(method = lm)+
+   theme_classic()+
+   ggtitle("MY PLOT")
+my.plot
+```
+
+```{r save plot, message=FALSE}
+ggsave("my.plot.jpg",my.plot, height=4, width=4, dpi=500)
+```
+
+## Programming
+* Basic Rationale about Programming
+```{r basic programming}
+# Basic function structure
+square.it <- function(x) {
+  square <- x * x
+  return(square)
+}
+
+square.it(5)
+```
+* For Loops
+```{r for loops}
+newvector <- rep(NA, nrow(iris))
+newvector
+
+comvec <- function(newvector){
+  for(i in 1:length(newvector)){
+    newvector[i] <- paste("Demo", i, sep = "_")
+  }
+  print(newvector)
+}
+
+comvec(newvector)
+```
+* Avoid For Loops for Efficiency
+```{r efficiency}
+newvector <- paste("Demo", seq(1:nrow(iris)), sep="_")
+newvector
+
+## apply
+## lapply
+## sapply
+## tapply
+```
