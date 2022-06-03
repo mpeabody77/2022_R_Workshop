@@ -493,7 +493,7 @@ head(addediris)</code></pre>
 <div id="rename-variables" class="section level3">
 <h3>Rename Variables</h3>
 <pre class="r"><code># rename(data frame, new_name = old_name, new_name = old_name)
-iris &lt;- rename(iris, pet.len = Petal.Length, pet.wid=Petal.Width) 
+iris &lt;- rename(iris, pet.len = Petal.Length, pet.wid = Petal.Width) 
 head(iris)</code></pre>
 <pre><code>##   Sepal.Length Sepal.Width pet.len pet.wid Species
 ## 1          5.1         3.5     1.4     0.2  setosa
@@ -502,6 +502,123 @@ head(iris)</code></pre>
 ## 4          4.6         3.1     1.5     0.2  setosa
 ## 5          5.0         3.6     1.4     0.2  setosa
 ## 6          5.4         3.9     1.7     0.4  setosa</code></pre>
+</div>
+<div id="recode-values" class="section level3">
+<h3>Recode Values</h3>
+<pre class="r"><code># recode factors recode(old column, old name = new name)
+newcol1 &lt;- dplyr::recode(iris$Species, &quot;setosa&quot;=&quot;SET&quot;, &quot;versicolor&quot;=&quot;VER&quot;, &quot;virginica&quot; = &quot;VIR&quot;)
+newcol1</code></pre>
+<pre><code>##   [1] SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET
+##  [18] SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET
+##  [35] SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET SET VER
+##  [52] VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER
+##  [69] VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER
+##  [86] VER VER VER VER VER VER VER VER VER VER VER VER VER VER VER VIR VIR
+## [103] VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR
+## [120] VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR
+## [137] VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR VIR
+## Levels: SET VER VIR</code></pre>
+<pre class="r"><code># pasting text together
+newcol2 &lt;- paste(iris$Species, newcol1, sep = &quot;_&quot;)
+newcol2</code></pre>
+<pre><code>##   [1] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##   [5] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##   [9] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [13] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [17] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [21] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [25] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [29] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [33] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [37] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [41] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [45] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;setosa_SET&quot;    
+##  [49] &quot;setosa_SET&quot;     &quot;setosa_SET&quot;     &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [53] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [57] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [61] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [65] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [69] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [73] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [77] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [81] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [85] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [89] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [93] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+##  [97] &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot; &quot;versicolor_VER&quot;
+## [101] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [105] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [109] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [113] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [117] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [121] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [125] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [129] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [133] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [137] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [141] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [145] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot; 
+## [149] &quot;virginica_VIR&quot;  &quot;virginica_VIR&quot;</code></pre>
+<pre class="r"><code># logic from other variables
+newcol3 &lt;- ifelse(iris$Sepal.Length &gt; 6 | iris$pet.len &gt; 6, &quot;long&quot;, &quot;standard&quot;)
+newcol3</code></pre>
+<pre><code>##   [1] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##   [7] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [13] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [19] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [25] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [31] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [37] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [43] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [49] &quot;standard&quot; &quot;standard&quot; &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot;
+##  [55] &quot;long&quot;     &quot;standard&quot; &quot;long&quot;     &quot;standard&quot; &quot;long&quot;     &quot;standard&quot;
+##  [61] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;long&quot;     &quot;standard&quot; &quot;long&quot;    
+##  [67] &quot;standard&quot; &quot;standard&quot; &quot;long&quot;     &quot;standard&quot; &quot;standard&quot; &quot;long&quot;    
+##  [73] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;    
+##  [79] &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [85] &quot;standard&quot; &quot;standard&quot; &quot;long&quot;     &quot;long&quot;     &quot;standard&quot; &quot;standard&quot;
+##  [91] &quot;standard&quot; &quot;long&quot;     &quot;standard&quot; &quot;standard&quot; &quot;standard&quot; &quot;standard&quot;
+##  [97] &quot;standard&quot; &quot;long&quot;     &quot;standard&quot; &quot;standard&quot; &quot;long&quot;     &quot;standard&quot;
+## [103] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot; &quot;long&quot;    
+## [109] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot;
+## [115] &quot;standard&quot; &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot;
+## [121] &quot;long&quot;     &quot;standard&quot; &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;    
+## [127] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;    
+## [133] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;    
+## [139] &quot;standard&quot; &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot; &quot;long&quot;    
+## [145] &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;long&quot;     &quot;standard&quot;</code></pre>
+<pre class="r"><code># other logic format
+#iris$Sepal.Length &gt; 6 &amp; iris$Petal.Length &gt; 6
+#iris$Sepal.Length &lt;= 6 | iris$Petal.Length != 6</code></pre>
+<pre class="r"><code># converting column types
+newcol4 &lt;- as.factor(newcol3)
+newcol4</code></pre>
+<pre><code>##   [1] standard standard standard standard standard standard standard
+##   [8] standard standard standard standard standard standard standard
+##  [15] standard standard standard standard standard standard standard
+##  [22] standard standard standard standard standard standard standard
+##  [29] standard standard standard standard standard standard standard
+##  [36] standard standard standard standard standard standard standard
+##  [43] standard standard standard standard standard standard standard
+##  [50] standard long     long     long     standard long     standard
+##  [57] long     standard long     standard standard standard standard
+##  [64] long     standard long     standard standard long     standard
+##  [71] standard long     long     long     long     long     long    
+##  [78] long     standard standard standard standard standard standard
+##  [85] standard standard long     long     standard standard standard
+##  [92] long     standard standard standard standard standard long    
+##  [99] standard standard long     standard long     long     long    
+## [106] long     standard long     long     long     long     long    
+## [113] long     standard standard long     long     long     long    
+## [120] standard long     standard long     long     long     long    
+## [127] long     long     long     long     long     long     long    
+## [134] long     long     long     long     long     standard long    
+## [141] long     long     standard long     long     long     long    
+## [148] long     long     standard
+## Levels: long standard</code></pre>
+<pre class="r"><code># other converting types
+# as.numeric()
+# as.character()</code></pre>
 </div>
 <div id="aggregate-and-sort" class="section level3">
 <h3>Aggregate and Sort</h3>
@@ -564,26 +681,26 @@ id.code &lt;- seq(1:nrow(iris))
 some.rand &lt;- rnorm(1:nrow(iris), mean = 0, sd = 1)
 new.df &lt;- data.frame(id.code, some.rand)
 head(new.df)</code></pre>
-<pre><code>##   id.code   some.rand
-## 1       1 -0.64512961
-## 2       2  0.01228598
-## 3       3 -0.30248021
-## 4       4  1.85828101
-## 5       5  1.11729023
-## 6       6  0.37281572</code></pre>
+<pre><code>##   id.code  some.rand
+## 1       1  0.0124634
+## 2       2  0.5214247
+## 3       3 -0.5012956
+## 4       4 -0.6372582
+## 5       5  0.3150137
+## 6       6  0.3996895</code></pre>
 <pre class="r"><code># create a key variable in iris
 iris &lt;- iris %&gt;% 
           mutate(id.code = seq(1:nrow(iris))) 
 
 iris.join &lt;- full_join(iris, new.df, by=&quot;id.code&quot;)
 head(iris.join)</code></pre>
-<pre><code>##   Sepal.Length Sepal.Width pet.len pet.wid Species id.code   some.rand
-## 1          5.1         3.5     1.4     0.2  setosa       1 -0.64512961
-## 2          4.9         3.0     1.4     0.2  setosa       2  0.01228598
-## 3          4.7         3.2     1.3     0.2  setosa       3 -0.30248021
-## 4          4.6         3.1     1.5     0.2  setosa       4  1.85828101
-## 5          5.0         3.6     1.4     0.2  setosa       5  1.11729023
-## 6          5.4         3.9     1.7     0.4  setosa       6  0.37281572</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width pet.len pet.wid Species id.code  some.rand
+## 1          5.1         3.5     1.4     0.2  setosa       1  0.0124634
+## 2          4.9         3.0     1.4     0.2  setosa       2  0.5214247
+## 3          4.7         3.2     1.3     0.2  setosa       3 -0.5012956
+## 4          4.6         3.1     1.5     0.2  setosa       4 -0.6372582
+## 5          5.0         3.6     1.4     0.2  setosa       5  0.3150137
+## 6          5.4         3.9     1.7     0.4  setosa       6  0.3996895</code></pre>
 <pre class="r"><code>## right_join
 ## left_join
 ## inner_join
@@ -667,9 +784,8 @@ my.plot</code></pre>
 </div>
 <div id="programming" class="section level2">
 <h2>Programming</h2>
-<ul>
-<li>Basic Rationale about Programming</li>
-</ul>
+<div id="basic-rationale-about-programming" class="section level3">
+<h3>Basic Rationale about Programming</h3>
 <pre class="r"><code># Basic function structure
 square.it &lt;- function(x) {
   square &lt;- x * x
@@ -678,10 +794,33 @@ square.it &lt;- function(x) {
 
 square.it(5)</code></pre>
 <pre><code>## [1] 25</code></pre>
-<ul>
-<li>For Loops</li>
-</ul>
-<pre class="r"><code>newvector &lt;- rep(NA, nrow(iris))
+</div>
+<div id="if-else-structure" class="section level3">
+<h3>If-else Structure</h3>
+<pre class="r"><code># if else statement structure
+num = 1000
+if (num &lt; 50) { 
+  eval &lt;- &quot;small&quot;
+} else {
+  eval &lt;- &quot;big&quot;
+}
+eval</code></pre>
+<pre><code>## [1] &quot;big&quot;</code></pre>
+</div>
+<div id="for-loops" class="section level3">
+<h3>For Loops</h3>
+<pre class="r"><code># Basic For Loop
+for (i in 1:5) {
+  print(i)
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre>
+<pre class="r"><code># Put For Loop in a Function
+## newvector is an NA vector with the length as nrow(iris) 
+newvector &lt;- rep(NA, nrow(iris))
 newvector</code></pre>
 <pre><code>##   [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
 ##  [24] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
@@ -697,6 +836,7 @@ newvector</code></pre>
   print(newvector)
 }
 
+## now newvector is vector with filled in content of the same length. 
 comvec(newvector)</code></pre>
 <pre><code>##   [1] &quot;Demo_1&quot;   &quot;Demo_2&quot;   &quot;Demo_3&quot;   &quot;Demo_4&quot;   &quot;Demo_5&quot;   &quot;Demo_6&quot;  
 ##   [7] &quot;Demo_7&quot;   &quot;Demo_8&quot;   &quot;Demo_9&quot;   &quot;Demo_10&quot;  &quot;Demo_11&quot;  &quot;Demo_12&quot; 
@@ -723,9 +863,9 @@ comvec(newvector)</code></pre>
 ## [133] &quot;Demo_133&quot; &quot;Demo_134&quot; &quot;Demo_135&quot; &quot;Demo_136&quot; &quot;Demo_137&quot; &quot;Demo_138&quot;
 ## [139] &quot;Demo_139&quot; &quot;Demo_140&quot; &quot;Demo_141&quot; &quot;Demo_142&quot; &quot;Demo_143&quot; &quot;Demo_144&quot;
 ## [145] &quot;Demo_145&quot; &quot;Demo_146&quot; &quot;Demo_147&quot; &quot;Demo_148&quot; &quot;Demo_149&quot; &quot;Demo_150&quot;</code></pre>
-<ul>
-<li>Avoid For Loops for Efficiency</li>
-</ul>
+</div>
+<div id="avoid-for-loops-for-efficiency" class="section level3">
+<h3>Avoid For Loops for Efficiency</h3>
 <pre class="r"><code>newvector &lt;- paste(&quot;Demo&quot;, seq(1:nrow(iris)), sep=&quot;_&quot;)
 newvector</code></pre>
 <pre><code>##   [1] &quot;Demo_1&quot;   &quot;Demo_2&quot;   &quot;Demo_3&quot;   &quot;Demo_4&quot;   &quot;Demo_5&quot;   &quot;Demo_6&quot;  
@@ -757,6 +897,7 @@ newvector</code></pre>
 ## lapply
 ## sapply
 ## tapply</code></pre>
+</div>
 </div>
 
 

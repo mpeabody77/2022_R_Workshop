@@ -78,8 +78,40 @@ dim(addediris)
 ### Rename Variables
 ```{r rename}
 # rename(data frame, new_name = old_name, new_name = old_name)
-iris <- rename(iris, pet.len = Petal.Length, pet.wid=Petal.Width) 
+iris <- rename(iris, pet.len = Petal.Length, pet.wid = Petal.Width) 
 head(iris)
+```
+### Recode Values
+```{r recode1}
+# recode factors recode(old column, old name = new name)
+newcol1 <- dplyr::recode(iris$Species, "setosa"="SET", "versicolor"="VER", "virginica" = "VIR")
+newcol1
+```
+
+```{r recode2}
+# pasting text together
+newcol2 <- paste(iris$Species, newcol1, sep = "_")
+newcol2
+```
+
+```{r recode3}
+# logic from other variables
+newcol3 <- ifelse(iris$Sepal.Length > 6 | iris$pet.len > 6, "long", "standard")
+newcol3
+
+# other logic format
+#iris$Sepal.Length > 6 & iris$Petal.Length > 6
+#iris$Sepal.Length <= 6 | iris$Petal.Length != 6
+```
+
+```{r recode4}
+# converting column types
+newcol4 <- as.factor(newcol3)
+newcol4
+
+# other converting types
+# as.numeric()
+# as.character()
 ```
 
 ### Aggregate and Sort
@@ -174,7 +206,7 @@ ggsave("my.plot.jpg",my.plot, height=4, width=4, dpi=500)
 ```
 
 ## Programming
-* Basic Rationale about Programming
+### Basic Rationale about Programming
 ```{r basic programming}
 # Basic function structure
 square.it <- function(x) {
@@ -184,8 +216,28 @@ square.it <- function(x) {
 
 square.it(5)
 ```
-* For Loops
+### If-else Structure
+```{r ifelse}
+# if else statement structure
+num = 1000
+if (num < 50) { 
+  eval <- "small"
+} else {
+  eval <- "big"
+}
+eval
+```
+### For Loops
+```{r for loop basics}
+# Basic For Loop
+for (i in 1:5) {
+  print(i)
+}
+```
+
 ```{r for loops}
+# Put For Loop in a Function
+## newvector is an NA vector with the length as nrow(iris) 
 newvector <- rep(NA, nrow(iris))
 newvector
 
@@ -196,9 +248,10 @@ comvec <- function(newvector){
   print(newvector)
 }
 
+## now newvector is vector with filled in content of the same length. 
 comvec(newvector)
 ```
-* Avoid For Loops for Efficiency
+### Avoid For Loops for Efficiency
 ```{r efficiency}
 newvector <- paste("Demo", seq(1:nrow(iris)), sep="_")
 newvector
