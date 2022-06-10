@@ -1,0 +1,46 @@
+---
+title: "peabody_conclusion"
+output: html_document
+date: '2022-06-10'
+---
+
+# Advanced Topics
+
+### Creating Packages
+
+Eventually, you may find yourself doing the same analysis over and over again. In this case, you may want to create your own package with functions specific to your work. There are a lot of resources on this subject, but in our opinion Hadley's book is probably the best.
+
+<http://r-pkgs.had.co.nz/>
+
+### Documents with R Markdown
+
+Those who need to create documentation or reports might consider using R Markdown. This allows you to embed code into text and them "knit" the results into HTML, PDF, or even Word.
+
+<https://rmarkdown.rstudio.com/>
+
+### Shiny apps 
+
+Occasionally, you may want to present your research as a dashboard. Shiny is an R package for building interactive web applications within the R ecosystem.
+
+<https://shiny.rstudio.com/>
+
+### Git
+
+Git is a version control system that tracks changes and updates in code so that teams always know which is the most current version. Installation on Windows can be a bit cumbersome, but git comes pre-installed with Mac and Linux systems.
+
+### GIS and maps 
+
+R also supports the use of GIS and mapping for analyses.
+
+```{r}
+install.packages("ggmap") 
+
+install.packages("maps") 
+
+library(ggmap)
+
+#Using ggmap's internal crime dataset from the Houston police dept Jan-Aug 2010.
+
+murder <- subset(crime, offense == "murder") 
+qmplot(lon, lat, data = murder, colour = I('red'), size = I(3), darken = .3)
+```
