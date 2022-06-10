@@ -241,7 +241,7 @@ mean(na.omit(temp))
 
 ### Reading and Writing data
 
-There are several ways to read and write objects across a variety of different formats.
+There are several ways to read and write objects across a variety of different formats. Below are a few ways, but there are lots of different packages with different utilities and dependencies (i.e., Java).
 
 ```{r}
 
@@ -294,6 +294,7 @@ write.csv2(...)
 ```{r}
 
 # Read an excel file
+
 library(readxl)
 
 #read_excel() calls excel_format() to determine if path is xls or xlsx, based on the file extension and the file itself, in that order. Use read_xls() and read_xlsx() directly if you know better and want to prevent such guessing.
@@ -333,7 +334,9 @@ write_xlsx(
 # write an Excel file with multiple sheets
 
 require(openxlsx)
-list_of_datasets <- list("Name of DataSheet1" = dataframe1, "Name of Datasheet2" = dataframe2)
+
+list_of_datasets <- list("Name of DataSheet1" = dataframe1, 
+                         "Name of Datasheet2" = dataframe2)
 write.xlsx(list_of_datasets, file = "writeXLSX2.xlsx")
 ```
 
@@ -357,3 +360,71 @@ write_dta(mtcars, "mtcars.dta")
 ```
 
 ### Data Types
+
+There are only a few different data types in R.
+
+-   **Numeric** data are numbers that contain a decimal. Actually they can also be whole numbers but we'll gloss over that.
+
+-   **Integers** are whole numbers (those numbers without a decimal point).
+
+-   **Logical** data take on the value of either `TRUE` or `FALSE`. There's also another special type of logical called `NA` to represent missing values.
+
+-   **Character** data are used to represent string values. You can think of character strings as something like a word (or multiple words). A special type of character string is a *factor*, which is a string but with additional attributes (like levels or an order). We'll cover factors later.
+
+R is usually able to determine the data type automatically, but you can check using the `class()` function.
+
+```{r}
+num <- 2.2
+class(num)
+
+```
+
+```{r}
+
+char <- "hello"
+class(char)
+
+
+```
+
+```{r}
+
+logi <- TRUE
+class(logi)
+
+```
+
+It can sometimes be useful to be able to change the class of a variable using the `as.[className]()` family of coercion functions, although you need to be careful when doing this as you might receive some unexpected results (see what happens below when we try to convert a character string to a numeric).
+
+Let's coerce a number to a character.
+
+```{r}
+class(num)
+```
+
+```{r}
+num_char <-  as.character(num)
+num_char
+```
+
+```{r}
+class(num_char)
+```
+
+Now let's character to a number.
+
+```{r}
+class(char)
+```
+
+```{r}
+char_num <- as.numeric(char)
+```
+
+### Data Structures
+
+We're not going to get into all of the different data structures and details, but we will discuss the more common ones. We've already discussed vectors, so we will turn our attention to lists and data frames.
+
+Lists are...
+
+Data frames are ...
