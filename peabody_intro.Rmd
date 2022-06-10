@@ -425,6 +425,40 @@ char_num <- as.numeric(char)
 
 We're not going to get into all of the different data structures and details, but we will discuss the more common ones. We've already discussed vectors, so we will turn our attention to lists and data frames.
 
-Lists are...
+Lists are very flexible data structures which are ideal for storing irregular or non-rectangular data. To create a list we can use the `list()` function.
 
-Data frames are ...
+```{r}
+list_1 <- list(c("black", "yellow", "orange"),
+               c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE),
+               matrix(1:6, nrow = 3))
+
+list_1
+```
+
+Elements of a list can be extracted by indexing the levels.
+
+```{r}
+list_1[1]
+```
+
+```{r}
+list_1[2]
+```
+
+```{r}
+list_1[3]
+```
+
+Data frames are probably the most common structure you will encounter and are powerful two-dimensional objects made up of rows and columns which looks superficially very similar to a matrix. However, whilst matrices are restricted to containing data all of the same type, data frames can contain a mixture of different types of data.
+
+Typically, in a data frame each row corresponds to an individual observation and each column corresponds to a different measured or recorded variable. This setup may be familiar to those of you who use Microsoft Excel to manage and store your data.
+
+Use `library(help = "datasets")` to access a listing of R's built-in datasets.
+
+```{r}
+iris
+```
+
+```{r}
+mtcars
+```
