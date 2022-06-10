@@ -16,42 +16,46 @@ Although R is not new, it's popularity has increased rapidly over the last 10 ye
 -   Multi-platform (Windows, Mac, Linux)
 -   Extensive and coherent set of tools for statistical analysis.
 -   Extensive and flexible graphical facility capable of producing publication quality figures.
--   R has an expanding set of freely available 'packages' to extend R's capabilities.\*
+-   R has an expanding set of freely available 'packages' to extend R's capabilities.
 -   R has an extensive support network with numerous online and freely available documents.
 
-All of the reasons above are great reasons to use R. However, in our opinion, the single biggest reason to use R is that it facilitates robust and reproducible research practices. In contrast to more traditional 'point and click' software, writing code to perform your analysis ensures you have a permanent and accurate record of all the methods you used (and decisions you made) whilst analysing your data. You are then able to share this code (and your data) with other researchers / colleagues / journal reviewers who will be able to reproduce your analysis exactly. This is one of the tenets of open science. We will cover other topics to facilitate open science throughout this book, including creating reproducible reports and version control.
-
-In this Chapter we'll show you how to download and install R and RStudio on your computer, give you a brief RStudio orientation including working with RStudio Projects, installing and working with R packages to extend R's capabilities, some good habits to get into when working on projects and finally some advice on documenting your workflow and writing nice readable R code.
+All of the reasons above are great reasons to use R. However, in our opinion, the single biggest reason to use R is that it facilitates robust and reproducible research practices. In contrast to more traditional 'point and click' software, writing code to perform your analysis ensures you have a permanent and accurate record of all the methods you used (and decisions you made) whilst analyzing your data. You are then able to share this code (and your data) with other researchers / colleagues / journal reviewers who will be able to reproduce your analysis exactly. This is one of the tenets of open science. We will cover other topics to facilitate open science throughout this book, including creating reproducible reports and version control
 
 ### Installing R
 
-To get up and running the first thing you need to do is install R. R is freely available for Windows, Mac and Linux operating systems from the Comprehensive R Archive Network (CRAN) website. For Windows and Mac users we suggest you download and install the pre-compiled binary versions.
+To get up and running the first thing you need to do is install R. R is freely available for Windows, Mac and Linux operating systems from the Comprehensive R Archive Network (CRAN) website . For Windows and Mac users we suggest you download and install the pre-compiled binary versions.
+
+<https://cran.r-project.org/>
 
 ### Installing R-Studio
 
-Whilst its eminently possible to just use the base installation of R (many people do), we will be using a popular Integrated Development Environment (IDE) called RStudio. RStudio can be thought of as an add-on to R which provides a more user-friendly interface, incorporating the R Console, a script editor and other useful functionality (like R markdown and Git Hub integration). You can find more information about RStudio here.
+You can use the base installation of R, but we will be using a popular Integrated Development Environment (IDE) called RStudio. RStudio can be thought of as an add-on to R which provides a more user-friendly interface, incorporating the R Console, a script editor and other useful functionality.
+
+<https://www.rstudio.com/>
 
 ### R-Studio orientation
 
-Console Script window Environment Files, Plots, Packages, Help
+The R-Studio IDE has a lot of features and more are being added all the time, but we will start with the basics of the Console, Script window, Environment tab, Files tab, Plots tab, Packages tab, and Help tab.
 
-Options and add-ins Git
+More advanced users will notice the Global Options for setting up additional parameters under the Tools menu.
 
 ### Alternatives to R-Studio
 
-VS Code jupyter notebooks
+There are a lot of other IDEs that have R plug-ins such as VS Code and Jupyter notebooks. These IDEs are more general and also have integrations for Python, Java, and any number of other programming languages. We will restrict ourselves to R-Studio as it is the most advanced IDE that specializes in R (although you can use it for Python too).
 
 ### Understanding packages
 
-The base installation of R comes with many useful packages as standard. These packages will contain many of the functions you will use on a daily basis. However, as you start using R for more diverse projects (and as your own use of R evolves) you will find that there comes a time when you will need to extend R's capabilities. Happily, many thousands of R users have developed useful code and shared this code as installable packages. You can think of a package as a collection of functions, data and help files collated into a well defined standard structure which you can download and install in R. These packages can be downloaded from a variety of sources but the most popular are CRAN, Bioconductor and GitHub. Currently, CRAN hosts over 15000 packages and is the official repository for user contributed R packages. Bioconductor provides open source software oriented towards bioinformatics and hosts over 1800 R packages. GitHub is a website that hosts git repositories for all sorts of software and projects (not just R). Often, cutting edge development versions of R packages are hosted on GitHub so if you need all the new bells and whistles then this may be an option. However, a potential downside of using the development version of an R package is that it might not be as stable as the version hosted on CRAN (it's in development!) and updating packages won't be automatic.
+Packages are the backbone of R. You can think of a package as a collection of functions, data, and help files collated into a well defined standard structure which you can download and install in R. These packages can be downloaded from a variety of sources but the most popular are CRAN and GitHub. CRAN is the official repository and packages available there have passed a rigorous screening process. GitHub is a website that hosts git repositories for all sorts of software and projects (not just R). Often, cutting edge development versions of R packages are hosted on GitHub so if you need all the new bells and whistles then this may be an option. However, a potential downside of using the development version of an R package is that it might not be as stable as the version hosted on CRAN (it's in development!) and updating packages won't be automatic.
 
-To install a package from CRAN you can use the install.packages() function. For example if you want to install the remotes package enter the following code into the Console window of RStudio (note: you will need a working internet connection to do this)
+To install a package from CRAN you can use the `install.packages()` function or use the Install button under the Packages tab in R-Studio.
 
-Or use the Install button under the Packages tab in R-Studio.
+To load a package into the environment, you can use either `library()` or `require()` . There are occasionally reasons for choosing one of these over the other, but typically you can use them interchangeably.
 
-`library(psych)` `require(psych)`
+You can also use a package function without loading it into the environment by typing the package name followed by two semi-colons and the function name. For example, if you want to read an Excel file you can either use `library(readxl)` followed by the `read_excel()` function or simply use `readxl::read_excel()` .
 
-Cracking open a package
+Again, there are circumstances where you want to load the package into the environment and others where you don't. It just depends on the situation.
+
+Since R is open-source, you can always open a function to see how it works. However, this can get a bit complex, so let's just start by looking at the code for one of the Base functions `cor()` from the `stats` package. To do this, just type the function name without the `()`.
 
 ```{r}
 cor
@@ -63,20 +67,24 @@ These are a great way of keeping things organised is to use RStudio Projects. An
 
 ### Working Directory
 
-The working directory is the default location where R will look for files you want to load and where it will put any files you save. One of the great things about using RStudio Projects is that when you open a project it will automatically set your working directory to the appropriate location. You can check the file path of your working directory by looking at bar at the top of the Console pane. Note: the \~ symbol above is shorthand for /Users/nhy163/ on a Mac computer (the same on Linux computers).
+The working directory is the default location where R will look for files you want to load and where it will put any files you save. One of the great things about using RStudio Projects is that when you open a project it will automatically set your working directory to the appropriate location. You can check the file path of your working directory by looking at bar at the top of the Console pane. Or by using the command line.
+
+```{r}
+getwd()
+```
 
 ### Names
 
 *There are only two hard things in Computer Science: cache invalidation and naming things.*\
 *- Phil Karlton*
 
-First, avoid using spaces in file names by replacing them with underscores or even hyphens. Why does this matter? One reason is that some command line software (especially many bioinformatic tools) won't recognise a file name with a space and you'll have to go through all sorts of shenanigans using escape characters to make sure spaces are handled correctly. Even if you don't think you will ever use command line software you may be doing so indirectly. Take R markdown for example, if you want to render an R markdown document to pdf using the rmarkdown package you will actually be using a command line LaTeX engine under the hood (called Pandoc). Another good reason not to use spaces in file names is that it makes searching for file names (or parts of file names) using regular expressions in R (or any other language) much more difficult.
-
-For the reasons given above, also avoid using special characters (i.e. \@£\$%\^&\*(:/) in your file names.
+First, avoid using spaces or special characters (i.e. \@£\$%\^&\*(:/) in file names by replacing them with underscores or even hyphens. There are a lot of technical reasons for this, so you're just going to have to trust use on this one.
 
 If you are versioning your files with sequential numbers (i.e. file1, file2, file3 ...) and you have more than 9 files you should use 01, 02, 03 .. 10 as this will ensure the files are printed in the correct order (see what happens if you don't). If you have more than 99 files then use 001, 002, 003... etc.
 
 If your file names include dates, use the ISO 8601 format YYYY-MM-DD (or YYYYMMDD) to ensure your files are listed in proper chronological order.
+
+For variable names, the same rules generally apply. If you have a space in a variable name, R will automatically fill it with a period. If you absolutely have to have a space in a variable name, you will need to surround the name with quotes or the \` symbol to ensure that R properly reads the name.
 
 ### Documentation
 
@@ -91,9 +99,9 @@ print("This code prints")
 
 R is case sensitive i.e. A is not the same as a and anova is not the same as Anova.
 
-R has a lot of specific instances when you need to specifically use parentheses ( ), braces { }, or brackets[ ]. So, you need to pay attention to what you're doing.
+R has a lot of specific instances when you need to specifically use parentheses `()`, braces `{}`, or brackets `[]`. So, you need to pay attention to what you're doing.
 
-Because R is object-oriented, you will find yourself pushing data into variables a lot. You can use either a single equal sign (=) or the carrot (\<-).
+Because R is object-oriented, you will find yourself pushing data into variables a lot. You can use either a single equal sign `=` or the carrot `<-`. The carrot is typically recommended because there are instances where you need to specifically use the single `=` rather than the typical double `==`.
 
 ```{r}
 my_first_variable <- "This is my first string variable"
@@ -174,9 +182,9 @@ length(unique(my_vec))
 seq(1:10)
 ```
 
-### Extracting Element
+### Extracting Elements
 
-To extract (also known as indexing or subscripting) one or more values (more generally known as elements) from a vector we use the bracket `[ ]` notation. The general approach is to name the object you wish to extract from, then a set of square brackets with an index of the element you wish to extract contained within the square brackets. This index can be a position or the result of a logical test.
+To extract (also known as indexing or subscripting) one or more values (more generally known as elements) from a vector we use the bracket `[]` notation. The general approach is to name the object you wish to extract from, then a set of square brackets with an index of the element you wish to extract contained within the square brackets. This index can be a position or the result of a logical test.
 
 ```{r}
 # let's look at our vector again
@@ -209,7 +217,7 @@ my_vec > 4
 
 ### Missing data
 
-In R, missing data is usually represented by an NA symbol meaning 'Not Available'. Data may be missing for a whole bunch of reasons, maybe your machine broke down, maybe you broke down, maybe the weather was too bad to collect data on a particular day etc etc. Missing data can be a pain in the proverbial both from an R perspective and also a statistical perspective. From an R perspective missing data can be problematic as different functions deal with missing data in different ways. For example, let's say we collected air temperature readings over 10 days, but our thermometer broke on day 2 and again on day 9 so we have no data for those days
+In R, missing data is usually represented by an `NA` symbol. Data may be missing for a whole bunch of reasons, maybe your machine broke down, maybe you broke down, maybe the weather was too bad to collect data on a particular day etc etc. Missing data can be a pain in the proverbial both from an R perspective and also a statistical perspective. From an R perspective missing data can be problematic as different functions deal with missing data in different ways. For example, let's say we collected air temperature readings over 10 days, but our thermometer broke on day 2 and again on day 9 so we have no data for those days
 
 ```{r}
 temp  <- c(7.2, NA, 7.1, 6.9, 6.5, 5.8, 5.8, 5.5, NA, 5.5)
@@ -233,7 +241,7 @@ To find the missing values you can use the `is.na` for a Boolean response.
 is.na(temp)
 ```
 
-You can also remove the NA values using the `na.omit()` function.
+You can also remove the `NA` values using the `na.omit()` function.
 
 ```{r}
 mean(na.omit(temp))
