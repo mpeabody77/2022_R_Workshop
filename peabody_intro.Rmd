@@ -38,9 +38,8 @@ Console Script window Environment Files, Plots, Packages, Help
 Options and add-ins Git
 
 ### Alternatives to R-Studio
-VS Code
-jupyter notebooks
 
+VS Code jupyter notebooks
 
 ### Understanding packages
 
@@ -245,18 +244,116 @@ mean(na.omit(temp))
 There are several ways to read and write objects across a variety of different formats.
 
 ```{r}
-# read CSV
 
-# read Excel worksheet
+# Read delimited text files
 
-# read SPSS file
+read.table(file, header = FALSE, sep = "", quote = "\"'",
+           dec = ".", numerals = c("allow.loss", "warn.loss", "no.loss"),
+           row.names, col.names, as.is = !stringsAsFactors,
+           na.strings = "NA", colClasses = NA, nrows = -1,
+           skip = 0, check.names = TRUE, fill = !blank.lines.skip,
+           strip.white = FALSE, blank.lines.skip = TRUE,
+           comment.char = "#",
+           allowEscapes = FALSE, flush = FALSE,
+           stringsAsFactors = FALSE,
+           fileEncoding = "", encoding = "unknown", text, skipNul = FALSE)
+
+
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+
+
+read.csv2(file, header = TRUE, sep = ";", quote = "\"",
+          dec = ",", fill = TRUE, comment.char = "", ...)
+
+
+read.delim(file, header = TRUE, sep = "\t", quote = "\"",
+           dec = ".", fill = TRUE, comment.char = "", ...)
+
+
+read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
+            dec = ",", fill = TRUE, comment.char = "", ...)
 ```
 
 ```{r}
 
-# write CSV
+# Write delimited files
 
-# write Excel worksheet
+write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
+            eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+            col.names = TRUE, qmethod = c("escape", "double"),
+            fileEncoding = "")
 
-# write SPSS file
+
+write.csv(...)
+
+
+write.csv2(...)
 ```
+
+```{r}
+
+# Read an excel file
+library(readxl)
+
+#read_excel() calls excel_format() to determine if path is xls or xlsx, based on the file extension and the file itself, in that order. Use read_xls() and read_xlsx() directly if you know better and want to prevent such guessing.
+
+read_excel(path, sheet = NULL, range = NULL, col_names = TRUE,
+  col_types = NULL, na = "", trim_ws = TRUE, skip = 0,
+  n_max = Inf, guess_max = min(1000, n_max),
+  progress = readxl_progress(), .name_repair = "unique")
+
+
+read_xls(path, sheet = NULL, range = NULL, col_names = TRUE,
+  col_types = NULL, na = "", trim_ws = TRUE, skip = 0,
+  n_max = Inf, guess_max = min(1000, n_max),
+  progress = readxl_progress(), .name_repair = "unique")
+
+
+read_xlsx(path, sheet = NULL, range = NULL, col_names = TRUE,
+  col_types = NULL, na = "", trim_ws = TRUE, skip = 0,
+  n_max = Inf, guess_max = min(1000, n_max),
+  progress = readxl_progress(), .name_repair = "unique")
+```
+
+```{r}
+
+# Write an Excel file
+library(writexl)
+
+write_xlsx(
+  x,
+  path = tempfile(fileext = ".xlsx"),
+  col_names = TRUE,
+  format_headers = TRUE,
+  use_zip64 = FALSE
+)
+
+
+# write an Excel file with multiple sheets
+
+require(openxlsx)
+list_of_datasets <- list("Name of DataSheet1" = dataframe1, "Name of Datasheet2" = dataframe2)
+write.xlsx(list_of_datasets, file = "writeXLSX2.xlsx")
+```
+
+```{r}
+
+# Read and write SAS, SPSS, or Stata files
+
+library(haven)
+
+# SAS
+read_sas("mtcars.sas7bdat")
+write_sas(mtcars, "mtcars.sas7bdat")
+
+# SPSS
+read_sav("mtcars.sav")
+write_sav(mtcars, "mtcars.sav")
+
+# Stata
+read_dta("mtcars.dta")
+write_dta(mtcars, "mtcars.dta")
+```
+
+### Data Types
