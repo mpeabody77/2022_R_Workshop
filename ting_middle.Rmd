@@ -167,6 +167,32 @@ head(iris.join)
 ## anti_join
 ```
 
+## Long Format and Wide Format Transformation
+### Long to Wide
+```{r long to wide}
+longdata <- data.frame(ID = 1:3,
+    expand.grid(Name = c("Dora", "John", "Rob"), Year = 2012:2014),
+    BMI = round(runif(9, 18, 35), 0)
+)
+longdata
+
+widedata <- longdata %>% pivot_wider(
+              names_from = "Year", 
+              names_prefix = "yr",
+              values_from = "BMI")
+
+widedata
+```
+### Wide to Long
+```{r wide to long}
+longdataback <- widedata %>% pivot_longer(
+               cols = starts_with("yr"),
+               names_to = "Year",
+               values_to = "BMI",)
+
+longdataback
+```
+
 ## Analysis  
 ### Basic Statistics
 ```{r basic statistics}
